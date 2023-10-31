@@ -13,3 +13,33 @@ class Client(models.Model):
         verbose_name = 'Клиент'
         verbose_name_plural = 'Клиенты'
 
+
+class Mailing(models.Model):
+    PERIOD_DAILY = 'daily'
+    PERIOD_WEEKLY = 'weekly'
+    PERIOD_MONTHLY = 'monthly'
+
+    PERIODS = (
+        (PERIOD_DAILY, 'Ежедневно'),
+        (PERIOD_WEEKLY, 'Еженедельно'),
+        (PERIOD_MONTHLY, 'Ежемесячно')
+    )
+
+    STATUS_CREATED = 'created'
+    STATUS_STARTED = 'started'
+    STATUS_COMPLETED = 'completed'
+
+    STATUSES = (
+        (STATUS_CREATED, 'создана'),
+        (STATUS_CREATED, 'запущена'),
+        (STATUS_CREATED, 'завершена'),
+    )
+
+    mailing_time = models.TimeField
+    period = models.CharField(max_length=50, choices=PERIODS)
+    status = models.CharField(max_length=50, choices=STATUSES)
+    message = models.ForeignKey(Message, on_delete='SET_NULL')
+
+    class Meta:
+        verbose_name = 'Рассылка'
+        verbose_name_plural = 'Рассылки'
