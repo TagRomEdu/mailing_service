@@ -14,6 +14,15 @@ class Client(models.Model):
         verbose_name_plural = 'Клиенты'
 
 
+class Message(models.Model):
+    subject = models.CharField(max_length=150, verbose_name='Тема письма')
+    body = models.TextField(verbose_name='Тело письма')
+
+    class Meta:
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'
+
+
 class Mailing(models.Model):
     PERIOD_DAILY = 'daily'
     PERIOD_WEEKLY = 'weekly'
@@ -43,3 +52,7 @@ class Mailing(models.Model):
     class Meta:
         verbose_name = 'Рассылка'
         verbose_name_plural = 'Рассылки'
+
+
+class MailingLog(models.Model):
+    pass
