@@ -23,7 +23,7 @@ load_dotenv(BASE_DIR/'.env')
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET-KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -132,7 +132,7 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = 'static/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR/'static/media'
 
 EMAIL_HOST = 'smtp.yandex.ru'
