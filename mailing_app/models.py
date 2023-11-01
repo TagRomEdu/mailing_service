@@ -9,6 +9,9 @@ class Client(models.Model):
     name = models.CharField(max_length=250, verbose_name='ФИО')
     comment = models.TextField(**NULLABLE, verbose_name='Комментарий')
 
+    def __str__(self):
+        return f'{self.name}'
+
     class Meta:
         verbose_name = 'Клиент'
         verbose_name_plural = 'Клиенты'
@@ -17,6 +20,9 @@ class Client(models.Model):
 class Message(models.Model):
     subject = models.CharField(max_length=150, verbose_name='Тема письма')
     body = models.TextField(verbose_name='Тело письма')
+
+    def __str__(self):
+        return f'{self.subject}'
 
     class Meta:
         verbose_name = 'Сообщение'
@@ -49,6 +55,9 @@ class Mailing(models.Model):
     status = models.CharField(max_length=50, choices=STATUSES, verbose_name='Статус')
     message = models.ForeignKey(Message, on_delete=models.SET_NULL, **NULLABLE, verbose_name='Сообщение')
     clients = models.ManyToManyField(Client, verbose_name='Клиенты')
+
+    def __str__(self):
+        return f'{self.message}'
 
     class Meta:
         verbose_name = 'Рассылка'
