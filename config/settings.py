@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'mailing_app',
+    'users_app',
 ]
 
 MIDDLEWARE = [
@@ -150,3 +151,7 @@ CACHES = {
         'LOCATION': os.getenv('CACHE_LOCATED'),
     }
 }
+
+AUTH_USER_MODEL = 'users_app.User'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
