@@ -47,7 +47,7 @@ class Mailing(models.Model):
     mailing_time = models.TimeField(verbose_name='Время отправки')
     period = models.CharField(max_length=50, choices=PERIODS, verbose_name='Периодичность')
     status = models.CharField(max_length=50, choices=STATUSES, verbose_name='Статус')
-    message = models.ForeignKey(Message, on_delete='SET_NULL', verbose_name='Сообщение')
+    message = models.ForeignKey(Message, on_delete=models.SET_NULL, **NULLABLE, verbose_name='Сообщение')
     clients = models.ManyToManyField(Client, verbose_name='Клиенты')
 
     class Meta:
