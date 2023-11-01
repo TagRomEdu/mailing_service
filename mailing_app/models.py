@@ -5,7 +5,7 @@ NULLABLE = {'blank': True, 'null': True}
 
 
 class Client(models.Model):
-    email = models.EmailField(unique=True, verbose_name='E-mail')
+    email = models.EmailField(verbose_name='E-mail')
     name = models.CharField(max_length=250, verbose_name='ФИО')
     comment = models.TextField(**NULLABLE, verbose_name='Комментарий')
 
@@ -44,10 +44,11 @@ class Mailing(models.Model):
         (STATUS_CREATED, 'завершена'),
     )
 
-    mailing_time = models.TimeField
-    period = models.CharField(max_length=50, choices=PERIODS)
-    status = models.CharField(max_length=50, choices=STATUSES)
-    message = models.ForeignKey(Message, on_delete='SET_NULL')
+    mailing_time = models.TimeField(verbose_name='Время отправки')
+    period = models.CharField(max_length=50, choices=PERIODS, verbose_name='Периодичность')
+    status = models.CharField(max_length=50, choices=STATUSES, verbose_name='Статус')
+    message = models.ForeignKey(Message, on_delete='SET_NULL', verbose_name='Сообщение')
+    clients = models.ManyToManyField(Client, verbose_name='Клиенты')
 
     class Meta:
         verbose_name = 'Рассылка'
@@ -55,4 +56,12 @@ class Mailing(models.Model):
 
 
 class MailingLog(models.Model):
-    pass
+    mailing_time = models.DateTimeField(verbose_name='Дата и время последней рассылки')
+    status = models.BooleanField(default=False, verbose_name='Статус попытки')
+    client = models.CharField(max_length=150, verbose_name='Клиент')
+    mailing = models.IntegerField(verbose_name='Рассылка')
+    error_msg = models.TextField(**NULLABLE, verbose_name='Сообщение об ошибке')
+
+    class Meta:
+        verbose_name = 'Лог'
+        verbose_name_plural = 'Логи'
