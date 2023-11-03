@@ -1,5 +1,6 @@
 from django.db import models
 
+from users_app.models import User
 
 NULLABLE = {'blank': True, 'null': True}
 
@@ -74,3 +75,21 @@ class MailingLog(models.Model):
     class Meta:
         verbose_name = 'Лог'
         verbose_name_plural = 'Логи'
+
+
+class Blog(models.Model):
+    name = models.CharField(max_length=150, verbose_name='')
+    slug = models.SlugField(max_length=250, unique=True, verbose_name='URL')
+    text = models.TextField(verbose_name="Содержимое")
+    preview = models.ImageField(upload_to='media/', **NULLABLE, verbose_name="Превью")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    is_published = models.BooleanField(default=False, verbose_name="Признак публикации")
+    view_count = models.IntegerField(default=0, verbose_name="Количество просмотров")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE, verbose_name="Пользователь")
+
+    def __str__(self):
+        return f'{self.name}, {self.slug}'
+
+    class Meta:
+        verbose_name = "Статья"
+        verbose_name_plural = "Статьи"
