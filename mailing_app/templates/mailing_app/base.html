@@ -38,14 +38,17 @@
 
 	      <div class="collapse navbar-collapse" id="ftco-nav">
 	        <ul class="navbar-nav ml-auto">
-	          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-	          <li class="nav-item"><a href="browsejobs.html" class="nav-link">Browse Jobs</a></li>
-	          <li class="nav-item"><a href="candidates.html" class="nav-link">Canditates</a></li>
-	          <li class="nav-item active"><a href="blog.html" class="nav-link">Blog</a></li>
-	          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-	          <li class="nav-item cta mr-md-1"><a href="new-post.html" class="nav-link">Post a Job</a></li>
-	          <li class="nav-item cta cta-colored"><a href="job-post.html" class="nav-link">Want a Job</a></li>
-
+	          <li class="nav-item"><a href="{% url 'mailing_app:index' %}" class="nav-link">Home</a></li>
+	          <li class="nav-item"><a href="{% url 'mailing_app:browsejobs' %}" class="nav-link">Browse Jobs</a></li>
+	          <li class="nav-item active"><a href="{% url 'mailing_app:blog_list' %}" class="nav-link">Blog</a></li>
+	          <li class="nav-item"><a href="{% url 'mailing_app:contact' %}" class="nav-link">Contact</a></li>
+              {% if user.is_authenticated %}
+                  <li class="nav-item cta mr-md-1"><a href="{% url 'users_app:logout' %}" class="nav-link">Выйти</a></li>
+                  <li class="nav-item cta cta-colored"><a href="{% url 'users_app:profile' %}" class="nav-link">Профиль</a></li>
+              {% else %}
+                  <li class="nav-item cta mr-md-1"><a href="{% url 'users_app:login' %}" class="nav-link">Войти</a></li>
+                  <li class="nav-item cta cta-colored"><a href="{% url 'users_app:register' %}" class="nav-link">Зарегистрироваться</a></li>
+              {% endif %}
 	        </ul>
 	      </div>
 	    </div>
@@ -148,7 +151,6 @@
   <script src="{% static 'js/aos.js' %}"></script>
   <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
   <script src="{% static 'js/scrollax.min.js' %}"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="{% static 'js/google-map.js' %}"></script>
   <script src="{% static 'js/main.js' %}"></script>
 

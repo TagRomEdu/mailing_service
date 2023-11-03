@@ -33,7 +33,7 @@ class LogoutView(BaseLogoutView):
 class RegisterView(CreateView):
     model = User
     form_class = UserForm
-    success_url = reverse_lazy('mailing_app:index')
+    success_url = reverse_lazy('mailing_app:blog_list')
     template_name = 'users_app/register.html'
 
     def form_valid(self, form):
@@ -75,7 +75,7 @@ class RegisterView(CreateView):
 
 class UserUpdateView(UpdateView):
     model = User
-    success_url = reverse_lazy('mailing_app:index')
+    success_url = reverse_lazy('mailing_app:blog_list')
     form_class = UserForm
 
     def get_object(self, queryset=None):
@@ -112,5 +112,5 @@ def generate_new_password(request):
     request.user.set_password(new_password)
     request.user.save()
 
-    return redirect(reverse('mailing_app:index'))
+    return redirect(reverse('mailing_app:blog_list'))
 

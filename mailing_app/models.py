@@ -9,6 +9,7 @@ class Client(models.Model):
     email = models.EmailField(verbose_name='E-mail')
     name = models.CharField(max_length=250, verbose_name='ФИО')
     comment = models.TextField(**NULLABLE, verbose_name='Комментарий')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE)
 
     def __str__(self):
         return f'{self.name}'
@@ -21,6 +22,7 @@ class Client(models.Model):
 class Message(models.Model):
     subject = models.CharField(max_length=150, verbose_name='Тема письма')
     body = models.TextField(verbose_name='Тело письма')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE)
 
     def __str__(self):
         return f'{self.subject}'
@@ -66,10 +68,8 @@ class Mailing(models.Model):
 
 
 class MailingLog(models.Model):
-    mailing_time = models.DateTimeField(verbose_name='Дата и время последней рассылки')
     status = models.BooleanField(default=False, verbose_name='Статус попытки')
-    client = models.CharField(max_length=150, verbose_name='Клиент')
-    mailing = models.IntegerField(verbose_name='Рассылка')
+    mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, verbose_name='Рассылка')
     error_msg = models.TextField(**NULLABLE, verbose_name='Сообщение об ошибке')
 
     class Meta:
