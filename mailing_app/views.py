@@ -1,17 +1,38 @@
+from django.forms import inlineformset_factory
 from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from pytils.translit import slugify
 
-from mailing_app.forms import BlogForm, MailingForm
-from mailing_app.models import Blog, Mailing
+from mailing_app.forms import BlogForm, MailingForm, MessageForm
+from mailing_app.models import Blog, Mailing, Message
 
 
 class MailingCreateView(CreateView):
     model = Mailing
     form_class = MailingForm
     success_url = reverse_lazy('mailing_app:mailing_list')
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        MessageFormset = inlineformset_factory(Mailing, Message, form=MessageForm, extra=1)
+        if self.request.method == 'POST':
+            formset = MessageFormset(self.request.POST, instance=self.object)
+        else:
+            formset = MessageFormset(instance=self.object)
+        context_data['formset'] = formset
+        return context_data
+
+    def form_valid(self, form):
+        context_data = self.get_context_data()
+        formset = context_data['formset']
+        self.object = form.save()
+
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+        return super().form_valid(form)
 
 
 class MailingUpdateView(UpdateView):
