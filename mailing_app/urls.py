@@ -1,7 +1,7 @@
 from django.urls import path
 
 from mailing_app.apps import MailingAppConfig
-from mailing_app.views import blog_single, contact, index, BlogListView, MailingListView, BlogDetailView, \
+from mailing_app.views import contact, BlogListView, MailingListView, BlogDetailView, \
     MailingDetailView
 
 app_name = MailingAppConfig.name
