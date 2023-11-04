@@ -4,10 +4,20 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from pytils.translit import slugify
 
-from mailing_app.forms import BlogForm
+from mailing_app.forms import BlogForm, MailingForm
 from mailing_app.models import Blog, Mailing
 
 
+class MailingCreateView(CreateView):
+    model = Mailing
+    form_class = MailingForm
+    success_url = reverse_lazy('mailing_app:mailing_list')
+
+
+class MailingUpdateView(UpdateView):
+    model = Mailing
+    form_class = MailingForm
+    success_url = reverse_lazy('mailing_app:mailing_single')
 
 
 class MailingListView(ListView):
@@ -16,6 +26,10 @@ class MailingListView(ListView):
 
 class MailingDetailView(DetailView):
     model = Mailing
+
+
+class MailingDeleteView(DeleteView):
+    pass
 
 
 def contact(request):
