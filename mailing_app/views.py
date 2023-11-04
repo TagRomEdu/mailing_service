@@ -5,15 +5,17 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 from pytils.translit import slugify
 
 from mailing_app.forms import BlogForm
-from mailing_app.models import Blog
+from mailing_app.models import Blog, Mailing
 
 
-def blog_single(request):
-    return render(request, 'mailing_app/blog-single.html')
 
 
-def browsejobs(request):
-    return render(request, 'mailing_app/mailing_list.html')
+class MailingListView(ListView):
+    model = Mailing
+
+
+class MailingDetailView(DetailView):
+    model = Mailing
 
 
 def contact(request):
