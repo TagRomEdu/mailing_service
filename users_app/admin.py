@@ -24,7 +24,7 @@ class MailingAdmin(admin.ModelAdmin):
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ('subject', 'body')
+    list_display = ('subject', 'body', 'mailing', 'user')
     list_filter = ('subject', 'body')
     list_search = ('subject', 'body')
 
