@@ -19,19 +19,6 @@ class Client(models.Model):
         verbose_name_plural = 'Клиенты'
 
 
-class Message(models.Model):
-    subject = models.CharField(max_length=150, verbose_name='Тема письма')
-    body = models.TextField(verbose_name='Тело письма')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE)
-
-    def __str__(self):
-        return f'{self.subject}'
-
-    class Meta:
-        verbose_name = 'Сообщение'
-        verbose_name_plural = 'Сообщения'
-
-
 class Mailing(models.Model):
     PERIOD_DAILY = 'daily'
     PERIOD_WEEKLY = 'weekly'
@@ -56,7 +43,6 @@ class Mailing(models.Model):
     mailing_time = models.TimeField(verbose_name='Время отправки')
     period = models.CharField(max_length=50, choices=PERIODS, verbose_name='Периодичность')
     status = models.CharField(max_length=50, choices=STATUSES, verbose_name='Статус')
-    message = models.ForeignKey(Message, on_delete=models.SET_NULL, **NULLABLE, verbose_name='Сообщение')
     clients = models.ManyToManyField(Client, verbose_name='Клиенты')
 
     def __str__(self):
@@ -65,6 +51,20 @@ class Mailing(models.Model):
     class Meta:
         verbose_name = 'Рассылка'
         verbose_name_plural = 'Рассылки'
+
+
+class Message(models.Model):
+    subject = models.CharField(max_length=150, verbose_name='Тема письма')
+    body = models.TextField(verbose_name='Тело письма')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE)
+    mailing = models.ForeignKey(Mailing, on_delete=models.SET_NULL, **NULLABLE, verbose_name='Рассылка')
+
+    def __str__(self):
+        return f'{self.subject}'
+
+    class Meta:
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'
 
 
 class MailingLog(models.Model):
