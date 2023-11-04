@@ -1,6 +1,6 @@
 from django import forms
 
-from mailing_app.models import Blog, Mailing
+from mailing_app.models import Blog, Mailing, Message
 
 
 class BlogForm(forms.ModelForm):
@@ -19,7 +19,19 @@ class MailingForm(forms.ModelForm):
 
     class Meta:
         model = Mailing
-        fields = ('period', 'status', 'message', 'clients')
+        fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
+
+class MessageForm(forms.ModelForm):
+
+    class Meta:
+        model = Message
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
