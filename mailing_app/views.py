@@ -29,7 +29,8 @@ class MailingDetailView(DetailView):
 
 
 class MailingDeleteView(DeleteView):
-    pass
+    model = Mailing
+    success_url = reverse_lazy('mailing_app:mailing_list')
 
 
 def contact(request):
