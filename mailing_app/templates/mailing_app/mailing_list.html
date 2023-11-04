@@ -21,6 +21,27 @@
 						{% if user.is_authenticated %}
 							<a href="{% url 'mailing_app:create_mailing' %}" class="btn btn-primary py-2">Создать рассылку</a>
 					    {% endif %}
+<div class="container">
+    <div class="row text-center justify-content-center align-items-center">
+        {% for object in object_list %}
+            <div class="col-4">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">{{object.mailing_time}}</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">{{object.period}}</h1>
+                        <h5 class="fw-normal text-muted mb-3">{{object.status}}</h5>
+                        <a class="p-1 btn btn-info text-white" href="{% url 'mailing_app:update_mailing' object.pk %}"><h5>Узнать больше</h5></a>
+                        {% if user.is_superuser or object.user == user %}
+                            <a class="p-1 btn btn-danger text-white" href="{% url 'mailing_app:delete_mailing' object.pk %}"><h5>Удалить</h5></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 						<div class="row">
 							<div class="col-md-12 ftco-animate">
 		            <div class="job-post-item p-4 d-block d-lg-flex align-items-center">
