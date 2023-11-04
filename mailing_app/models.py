@@ -46,7 +46,7 @@ class Mailing(models.Model):
     clients = models.ManyToManyField(Client, verbose_name='Клиенты')
 
     def __str__(self):
-        return f'{self.message}'
+        return f'{self.pk}'
 
     class Meta:
         verbose_name = 'Рассылка'
