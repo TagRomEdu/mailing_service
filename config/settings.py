@@ -142,7 +142,7 @@ EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'm@sster.ru'
 EMAIL_HOST_PASSWORD = os.getenv('YA_PASS')
-EMAIL_USER_SSL = True
+EMAIL_USE_SSL = True
 
 CACHE_ENABLED = os.getenv('CACHE_ENABLED') == 'True'
 CACHES = {
