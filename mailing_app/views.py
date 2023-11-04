@@ -38,7 +38,7 @@ class MailingCreateView(CreateView):
 class MailingUpdateView(UpdateView):
     model = Mailing
     form_class = MailingForm
-    success_url = reverse_lazy('mailing_app:mailing_single')
+    success_url = reverse_lazy('mailing_app:mailing_list')
 
 
 class MailingListView(ListView):
