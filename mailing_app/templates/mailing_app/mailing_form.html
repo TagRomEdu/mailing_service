@@ -1,0 +1,39 @@
+{% extends 'mailing_app/base.html' %}
+
+{% block content %}
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Данные о рассылке</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    {% if object.name%}
+                        <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Внести изменения</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-lg btn-block btn-outline-success">Создать</button>
+                    {% endif %}
+                    <div class="card mb-2">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">Сообщение</h4>
+                        </div>
+                        <div class="card-body">
+                            {% csrf_token %}
+                            {{ formset.management_form }}
+                            {% for form in formset.forms %}
+                                {{ form.as_p }}
+                                {% if not forloop.last %}
+                                    <hr>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer"></div>
+        </div>
+    </div>
+{% endblock %}
