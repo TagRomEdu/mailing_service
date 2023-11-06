@@ -36,8 +36,8 @@ class Mailing(models.Model):
 
     STATUSES = (
         (STATUS_CREATED, 'создана'),
-        (STATUS_CREATED, 'запущена'),
-        (STATUS_CREATED, 'завершена'),
+        (STATUS_STARTED, 'запущена'),
+        (STATUS_COMPLETED, 'завершена'),
     )
 
     mailing_time = models.TimeField(verbose_name='Время отправки')
