@@ -44,11 +44,15 @@ class Mailing(models.Model):
     period = models.CharField(max_length=50, choices=PERIODS, verbose_name='Периодичность')
     status = models.CharField(max_length=50, choices=STATUSES, verbose_name='Статус')
     clients = models.ManyToManyField(Client, verbose_name='Клиенты')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Создатель')
 
     def __str__(self):
         return f'{self.pk}. Время: {self.mailing_time}, период: {self.period}, статус: {self.status}, клиенты: {self.clients.all()}.'
 
     class Meta:
+        permissions = [
+            ('disable_mailing', 'Can switch-off mailings'),
+        ]
         verbose_name = 'Рассылка'
         verbose_name_plural = 'Рассылки'
 
