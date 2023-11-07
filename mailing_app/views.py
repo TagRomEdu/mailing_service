@@ -5,6 +5,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from pytils.translit import slugify
 
+from mailing_app.cron import prepare_mailing
 from mailing_app.forms import BlogForm, MailingForm, MessageForm
 from mailing_app.models import Blog, Mailing, Message
 
@@ -32,6 +33,7 @@ class MailingCreateView(CreateView):
         if formset.is_valid():
             formset.instance = self.object
             formset.save()
+            prepare_mailing(self.object)
         return super().form_valid(form)
 
 
