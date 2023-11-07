@@ -46,7 +46,7 @@ class Mailing(models.Model):
     clients = models.ManyToManyField(Client, verbose_name='Клиенты')
 
     def __str__(self):
-        return f'{self.pk}'
+        return f'{self.pk}. Время: {self.mailing_time}, период: {self.period}, статус: {self.status}, клиенты: {self.clients.all()}.'
 
     class Meta:
         verbose_name = 'Рассылка'
@@ -68,6 +68,7 @@ class Message(models.Model):
 
 
 class MailingLog(models.Model):
+    time = models.DateField(auto_now=True, verbose_name='Время изменения')
     status = models.BooleanField(default=False, verbose_name='Статус попытки')
     mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, verbose_name='Рассылка')
     error_msg = models.TextField(**NULLABLE, verbose_name='Сообщение об ошибке')
