@@ -6,7 +6,8 @@ from users_app.models import User
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('email', 'name', 'phone')
+    list_display = ('email', 'name', 'phone', 'is_active')
+    list_editable = ('is_active',)
 
 
 @admin.register(Client)
