@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from mailing_app.models import Client, Mailing, Message, MailingLog
+from mailing_app.models import Client, Mailing, Message, MailingLog, Blog
 from users_app.models import User
 
 
@@ -33,3 +33,8 @@ class MessageAdmin(admin.ModelAdmin):
 @admin.register(MailingLog)
 class MailingLogAdmin(admin.ModelAdmin):
     list_display = ('time', 'status', 'mailing', 'error_msg')
+
+
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug', 'is_published', 'user')
