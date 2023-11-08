@@ -33,6 +33,7 @@ class MailingCreateView(CreateView):
         if formset.is_valid():
             formset.instance = self.object
             formset.save()
+        if self.object.status == 'started':
             prepare_mailing(self.object)
         return super().form_valid(form)
 
