@@ -32,21 +32,21 @@ def prepare_mailing(mailing_object):
 
 def send_mailing():
     mailing_list = Mailing.objects.all()
+
     for mailing_object in mailing_list:
         if mailing_object.status != 'completed':
             log = MailingLog.objects.all().filter(mailing=mailing_object).last()
-            if mailing_object.period == 'daily':
-                if log is None:
+
+            if log is None:
+                prepare_mailing(mailing_object)
+
+            elif log.time != datetime.datetime.now().date() or not log.status:
+
+                if mailing_object.period == 'daily':
                     prepare_mailing(mailing_object)
-                elif log.time != datetime.datetime.now().date() or not log.status:
-                    prepare_mailing(mailing_object)
-            elif mailing_object.period == 'weekly':
-                if log is None:
-                    prepare_mailing(mailing_object)
-                elif log.time.weekday() == datetime.datetime.now().weekday() or not log.status:
-                    prepare_mailing(mailing_object)
-            elif mailing_object.period == 'monthly':
-                if log is None:
-                    prepare_mailing(mailing_object)
-                elif log.time.day == datetime.datetime.now().day or not log.status:
-                    prepare_mailing(mailing_object)
+                elif mailing_object.period == 'weekly':
+                    if log.time.weekday() == datetime.datetime.now().weekday():
+                        prepare_mailing(mailing_object)
+                elif mailing_object.period == 'monthly':
+                    if log.time.day == datetime.datetime.now().day:
+                        prepare_mailing(mailing_object)
