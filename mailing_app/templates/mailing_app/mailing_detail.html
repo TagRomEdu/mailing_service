@@ -6,7 +6,7 @@
         <div class="media-body">
           <h3 class="fw-normal text-muted mb-3">
             <ul class="list-group">
-              <li class="list-group-item font-weight-bolder">{{object.mailing_time}}</li>
+              <li class="list-group-item font-weight-bolder">Время отправки: {{object.mailing_time}}</li>
               <li class="list-group-item">Периодичность: {{object.period}}</li>
               <li class="list-group-item">Статус: {{object.status}}</li>
               <li class="list-group-item">Клиенты: {{object.clients.all | join:", " }}</li>
@@ -15,13 +15,15 @@
         </div>
       </div>
         <div class="card-footer">
-          {% if user.is_staff or object.user == user %}
+          {% if user.is_superuser or object.user == user %}
             <a class="p-1 btn btn-warning text-white" href="{% url 'mailing_app:update_mailing' object.pk %}"><h5>Редактировать</h5></a>
+            <a class="p-1 btn btn-danger text-white" href="{% url 'mailing_app:delete_mailing' object.pk %}"><h5>Удалить</h5></a>
+          {% elif perms.mailing_app.disable_mailing %}
+            <a class="p-1 btn btn-warning text-white" href="{% url 'mailing_app:change_status' object.pk %}"><h5>Изменить статус</h5></a>
           {% endif %}
         </div>
       </div>
     <div class="product-device shadow-sm d-none d-md-block"></div>
     <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
   </div>
-
 {% endblock %}
