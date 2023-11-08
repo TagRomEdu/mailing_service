@@ -1,4 +1,3 @@
-from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.forms import inlineformset_factory
 from django.http import Http404
 from django.shortcuts import render
@@ -9,7 +8,7 @@ from pytils.translit import slugify
 
 from mailing_app.cron import prepare_mailing
 from mailing_app.forms import BlogForm, MailingForm, MessageForm, MailingFormStatus
-from mailing_app.models import Blog, Mailing, Message
+from mailing_app.models import Blog, Mailing, Message, Client
 
 
 class MailingCreateView(CreateView):
@@ -71,7 +70,14 @@ def contact(request):
 
 @cache_page(60)
 def index(request):
-    return render(request, 'mailing_app/index.html')
+    context = {
+        'object_list': Mailing.objects.all(),
+        'active_mailing_count': Mailing.objects.all().exclude(status='completed').count(),
+        'all_clients': Client.objects.all(),
+        'blog_list': Blog.objects.order_by('?')[:3]
+
+    }
+    return render(request, 'mailing_app/index.html', context)
 
 
 class BlogCreateView(CreateView):
