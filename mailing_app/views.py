@@ -3,6 +3,7 @@ from django.forms import inlineformset_factory
 from django.http import Http404
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
+from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from pytils.translit import slugify
 
@@ -68,6 +69,7 @@ def contact(request):
     return render(request, 'mailing_app/contact.html')
 
 
+@cache_page(60)
 def index(request):
     return render(request, 'mailing_app/index.html')
 
