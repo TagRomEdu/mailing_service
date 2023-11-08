@@ -126,7 +126,7 @@ class BlogUpdateView(UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('mailing_app:blog_list', args=[self.kwargs.get('slug')])
+        return reverse('mailing_app:blog_single', args=[self.kwargs.get('slug')])
 
 
 class BlogDeleteView(DeleteView):
