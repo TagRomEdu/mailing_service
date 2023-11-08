@@ -1,0 +1,15 @@
+{% extends 'mailing_app/base.html' %}
+{% block content%}
+  <div class="col">
+    <div class="card mb-4 box-shadow">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <p>Хотите удадить такую классную рассылку? Вы серьёзно??</p>
+                <button type="submit" class="btn btn-lg btn-block btn-outline-danger">Подтвердить удаление</button>
+                <a href="{% url 'mailing_app:mailing_list' %}" class="btn btn-lg btn-block btn-outline-success">Отмена!</a>
+            </form>
+        </div>
+    </div>
+  </div>
+{% endblock %}

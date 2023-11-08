@@ -19,19 +19,6 @@ class Client(models.Model):
         verbose_name_plural = 'Клиенты'
 
 
-class Message(models.Model):
-    subject = models.CharField(max_length=150, verbose_name='Тема письма')
-    body = models.TextField(verbose_name='Тело письма')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE)
-
-    def __str__(self):
-        return f'{self.subject}'
-
-    class Meta:
-        verbose_name = 'Сообщение'
-        verbose_name_plural = 'Сообщения'
-
-
 class Mailing(models.Model):
     PERIOD_DAILY = 'daily'
     PERIOD_WEEKLY = 'weekly'
@@ -49,25 +36,43 @@ class Mailing(models.Model):
 
     STATUSES = (
         (STATUS_CREATED, 'создана'),
-        (STATUS_CREATED, 'запущена'),
-        (STATUS_CREATED, 'завершена'),
+        (STATUS_STARTED, 'запущена'),
+        (STATUS_COMPLETED, 'завершена'),
     )
 
     mailing_time = models.TimeField(verbose_name='Время отправки')
     period = models.CharField(max_length=50, choices=PERIODS, verbose_name='Периодичность')
     status = models.CharField(max_length=50, choices=STATUSES, verbose_name='Статус')
-    message = models.ForeignKey(Message, on_delete=models.SET_NULL, **NULLABLE, verbose_name='Сообщение')
     clients = models.ManyToManyField(Client, verbose_name='Клиенты')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Создатель')
 
     def __str__(self):
-        return f'{self.message}'
+        return f'{self.pk}. Время: {self.mailing_time}, период: {self.period}, статус: {self.status}, клиенты: {self.clients.all()}.'
 
     class Meta:
+        permissions = [
+            ('disable_mailing', 'Can switch-off mailings'),
+        ]
         verbose_name = 'Рассылка'
         verbose_name_plural = 'Рассылки'
 
 
+class Message(models.Model):
+    subject = models.CharField(max_length=150, verbose_name='Тема письма')
+    body = models.TextField(verbose_name='Тело письма')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, **NULLABLE)
+    mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, **NULLABLE, verbose_name='Рассылка')
+
+    def __str__(self):
+        return f'{self.subject}'
+
+    class Meta:
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'
+
+
 class MailingLog(models.Model):
+    time = models.DateField(auto_now=True, verbose_name='Время изменения')
     status = models.BooleanField(default=False, verbose_name='Статус попытки')
     mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, verbose_name='Рассылка')
     error_msg = models.TextField(**NULLABLE, verbose_name='Сообщение об ошибке')

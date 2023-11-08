@@ -16,7 +16,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic import CreateView, UpdateView
 
 from config import settings
-from users_app.forms import UserForm, CustomAuthForm
+from users_app.forms import UserForm, CustomAuthForm, UserUpdateForm
 from users_app.models import User
 
 
@@ -53,7 +53,7 @@ class RegisterView(CreateView):
 
         # Формируем тему и текст письма
 
-        subject = 'Интернет-магазин: подтверждение почты'
+        subject = 'Сервис рассылок: подтверждение почты'
         message = render_to_string('users_app/email_verification.html', {
             'user': user,
             'verification_url': verification_url,
@@ -76,7 +76,7 @@ class RegisterView(CreateView):
 class UserUpdateView(UpdateView):
     model = User
     success_url = reverse_lazy('mailing_app:blog_list')
-    form_class = UserForm
+    form_class = UserUpdateForm
 
     def get_object(self, queryset=None):
         return self.request.user

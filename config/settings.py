@@ -14,6 +14,8 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django_crontab',
 
     'mailing_app',
     'users_app',
@@ -142,7 +146,7 @@ EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'm@sster.ru'
 EMAIL_HOST_PASSWORD = os.getenv('YA_PASS')
-EMAIL_USER_SSL = True
+EMAIL_USE_SSL = True
 
 CACHE_ENABLED = os.getenv('CACHE_ENABLED') == 'True'
 CACHES = {
@@ -155,3 +159,7 @@ CACHES = {
 AUTH_USER_MODEL = 'users_app.User'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/'
+
+CRONJOBS = [
+    ('*/5 * * * *', 'mailing_app.cron.send_mailing')
+]
