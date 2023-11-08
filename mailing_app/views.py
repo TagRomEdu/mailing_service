@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.forms import inlineformset_factory
 from django.http import Http404
 from django.shortcuts import render
@@ -6,7 +7,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 from pytils.translit import slugify
 
 from mailing_app.cron import prepare_mailing
-from mailing_app.forms import BlogForm, MailingForm, MessageForm
+from mailing_app.forms import BlogForm, MailingForm, MessageForm, MailingFormStatus
 from mailing_app.models import Blog, Mailing, Message
 
 
@@ -41,6 +42,12 @@ class MailingCreateView(CreateView):
 class MailingUpdateView(UpdateView):
     model = Mailing
     form_class = MailingForm
+    success_url = reverse_lazy('mailing_app:mailing_list')
+
+
+class MailingUpdateStatusView(UpdateView):
+    model = Mailing
+    form_class = MailingFormStatus
     success_url = reverse_lazy('mailing_app:mailing_list')
 
 
