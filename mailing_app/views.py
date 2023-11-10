@@ -9,6 +9,7 @@ from pytils.translit import slugify
 from mailing_app.cron import prepare_mailing
 from mailing_app.forms import BlogForm, MailingForm, MessageForm, MailingFormStatus, ClientForm
 from mailing_app.models import Blog, Mailing, Message, Client
+from mailing_app.services import get_clients_cache
 
 
 class MailingCreateView(CreateView):
@@ -154,6 +155,9 @@ class ClientUpdateView(UpdateView):
 
 class ClientListView(ListView):
     model = Client
+
+    def get_queryset(self):
+        return get_clients_cache()
 
 
 class ClientDetailView(DetailView):
