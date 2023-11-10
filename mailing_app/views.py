@@ -150,7 +150,7 @@ class ClientUpdateView(UpdateView):
     success_url = reverse_lazy('mailing_app:index')
 
 
-class ClientListview(ListView):
+class ClientListView(ListView):
     model = Client
 
 
