@@ -25,6 +25,7 @@
 
     <div class="row text-center justify-content-center align-items-center my-3">
         <h3 class="fw-normal text-muted w-100">Количество наших любимых клиентов: {{ all_clients.count }}</h3>
+        <a type="button" class="btn btn-secondary" href="{% url 'mailing_app:client_list' %}">К списку клиентов</a>
     </div>
 
     {% if user.is_authenticated %}

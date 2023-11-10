@@ -1,0 +1,48 @@
+{% extends 'mailing_app/base.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="hero-wrap hero-wrap-2" style="background-image: url({% static 'media/bg_1.jpg' %});" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-start">
+          <div class="col-md-12 ftco-animate text-center mb-5">
+          	<p class="breadcrumbs mb-0"><span class="mr-3"><a href="{% url 'mailing_app:index' %}">Home</a></span></p>
+            <h1 class="mb-3 bread">Client List</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+
+		<section class="ftco-section bg-light">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-9 pr-lg-4">
+						{% if user.is_authenticated %}
+							<a href="{% url 'mailing_app:create_client' %}" class="btn btn-primary py-2">Добавить клиента</a>
+					    {% endif %}
+					</div>
+				</div>
+			</div>
+		</section>
+<div class="container">
+    <div class="row text-center justify-content-center align-items-center">
+		{% if user.is_authenticated %}
+			{% for object in object_list %}
+				<div class="col-4">
+					<div class="card mb-4 box-shadow">
+						<div class="card-header">
+							<h4 class="my-0 font-weight-normal">Клиент {{object.name}}</h4>
+						</div>
+						<div class="card-body">
+							<h1 class="card-title pricing-card-title">{{object.email}}</h1>
+							<h5 class="fw-normal text-muted mb-3">{{object.user}}</h5>
+							<a class="p-1 btn btn-info text-white" href="{% url 'mailing_app:client_single' object.pk %}"><h5>Подробнее</h5></a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+    </div>
+</div>
+{% endblock %}

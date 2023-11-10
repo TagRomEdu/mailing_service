@@ -5,9 +5,9 @@
         <div class="card-body">
             <form method="post">
                 {% csrf_token %}
-                <p>Хотите удалить статью "{{ object.name }}"?</p>
+                <p>Хотите расщепить клинта с именем "{{ object.name }}"?</p>
                 <button type="submit" class="btn btn-lg btn-block btn-outline-danger">Подтвердить удаление</button>
-                <a href="{% url 'mailing_app:blog_list' %}" class="btn btn-lg btn-block btn-outline-success">Отмена!</a>
+                <a href="{% url 'mailing_app:index' %}" class="btn btn-lg btn-block btn-outline-success">Отмена!</a>
             </form>
         </div>
     </div>
