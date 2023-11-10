@@ -138,3 +138,26 @@ class BlogUpdateView(UpdateView):
 class BlogDeleteView(DeleteView):
     model = Blog
     success_url = reverse_lazy('mailing_app:blog_list')
+
+
+class ClientCreateView(CreateView):
+    model = Client
+    success_url = reverse_lazy('mailing_app:index')
+
+
+class ClientUpdateView(UpdateView):
+    model = Client
+    success_url = reverse_lazy('mailing_app:index')
+
+
+class ClientListview(ListView):
+    model = Client
+
+
+class ClientDetailView(DetailView):
+    model = Client
+
+
+class ClientDeleteView(DetailView):
+    model = Client
+    success_url = reverse_lazy('mailing_app:index')
