@@ -52,8 +52,9 @@ class MailingFormStatus(forms.ModelForm):
 
 
 class ClientForm(forms.ModelForm):
-    model = Client
-    fields = '__all__'
+    class Meta:
+        model = Client
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
