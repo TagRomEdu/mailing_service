@@ -7,7 +7,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 from pytils.translit import slugify
 
 from mailing_app.cron import prepare_mailing
-from mailing_app.forms import BlogForm, MailingForm, MessageForm, MailingFormStatus
+from mailing_app.forms import BlogForm, MailingForm, MessageForm, MailingFormStatus, ClientForm
 from mailing_app.models import Blog, Mailing, Message, Client
 
 
@@ -142,11 +142,13 @@ class BlogDeleteView(DeleteView):
 
 class ClientCreateView(CreateView):
     model = Client
+    form_class = ClientForm
     success_url = reverse_lazy('mailing_app:index')
 
 
 class ClientUpdateView(UpdateView):
     model = Client
+    form_class = ClientForm
     success_url = reverse_lazy('mailing_app:index')
 
 
