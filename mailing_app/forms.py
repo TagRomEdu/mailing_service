@@ -1,6 +1,7 @@
 from django import forms
 
 from mailing_app.models import Blog, Mailing, Message, Client
+from users_app.models import User
 
 
 class BlogForm(forms.ModelForm):
@@ -22,7 +23,9 @@ class MailingForm(forms.ModelForm):
         exclude = ['user']
 
     def __init__(self, *args, **kwargs):
+        pk = kwargs.pop('pk')
         super().__init__(*args, **kwargs)
+        self.fields['clients'].queryset = User.objects.get(pk=pk).client_set.all()
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
 

@@ -17,6 +17,11 @@ class MailingCreateView(CreateView):
     form_class = MailingForm
     success_url = reverse_lazy('mailing_app:mailing_list')
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'pk': self.request.user.pk})
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         MessageFormset = inlineformset_factory(Mailing, Message, form=MessageForm, extra=1)
@@ -46,7 +51,6 @@ class MailingCreateView(CreateView):
 
 class MailingUpdateView(UpdateView):
     model = Mailing
-    form_class = MailingForm
     success_url = reverse_lazy('mailing_app:mailing_list')
 
 
