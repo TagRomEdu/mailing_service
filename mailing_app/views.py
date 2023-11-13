@@ -146,6 +146,13 @@ class ClientCreateView(CreateView):
     form_class = ClientForm
     success_url = reverse_lazy('mailing_app:index')
 
+    def form_valid(self, form):
+        if form.is_valid():
+            new_client = form.save()
+            new_client.user = self.request.user
+            new_client.save()
+        return super().form_valid(form)
+
 
 class ClientUpdateView(UpdateView):
     model = Client

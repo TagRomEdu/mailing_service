@@ -54,7 +54,7 @@ class MailingFormStatus(forms.ModelForm):
 class ClientForm(forms.ModelForm):
     class Meta:
         model = Client
-        fields = '__all__'
+        exclude = ['user']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
