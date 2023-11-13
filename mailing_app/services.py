@@ -11,6 +11,10 @@ def get_clients_cache():
         if client_list is None:
             client_list = Client.objects.all()
             cache.set(key, client_list)
+        else:
+            if client_list != Client.objects.all():
+                client_list = Client.objects.all()
+                cache.set(key, client_list)
     else:
         client_list = Client.objects.all()
     return client_list
